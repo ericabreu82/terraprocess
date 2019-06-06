@@ -1,0 +1,25 @@
+TerraProcess - Build Instructions
+=========================================
+
+The build/cmake folder contains a CMake project for building TerraProcess.
+
+Until now its build has been tested on Microsoft Windows 10.
+
+You should use at least CMake version 3.14.3 for building TerraProcess.
+
+Make sure you have all the third-party library dependencies listed in the DEPENDENCIES file on the root of the codebase.
+
+
+Notes:
+
+- In order to build TerraProcess, the Terralib GIS library must be installed or compiled.
+  Then, set the cmake variable terralib_DIR, indicating the path to the file "terralib-config.cmake".
+
+- TerraProcesss 0.1.0 is compatible with Terralib GIS library version 5.5.0.
+
+
+Follow the build steps below according to your platform.
+
+1. Build instructions on Windows 10
+-----------------------------------
+
