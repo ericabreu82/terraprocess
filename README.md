@@ -7,20 +7,18 @@ Based on TerraLib geographic library.
 Documents:
 ----------
 
-BUILD-INSTRUCTIONS  Notes on how to compile and install TerraProcess in some platforms.
+- BUILD-INSTRUCTIONS: Notes on how to compile and install TerraProcess in some platforms.
 
-COPYING             Licence statement in plain txt format.
+- COPYING: Licence statement in plain txt format.
 
-COPYING.html        Licence statement in HTML format.
+- COPYING.html: Licence statement in HTML format.
 
 Directories:
 ------------
 
-build       Contains the CMake scripts with commands, macros and functions 
-			      used to build the environment for compiling libraries and executables
-			      in different platforms using the CMake tool.
+- build: Contains the CMake scripts with commands, macros and functions used to build the environment for compiling libraries and executables in different platforms using the CMake tool.
                
-src         Contains the source code of TerraProcess.
+- src: Contains the source code of TerraProcess.
             
 
 Bug reporting:
@@ -29,6 +27,9 @@ Bug reporting:
 Any problems encountered with TerraProcess should be reported to development team.
 
 @-TerraProcess Team-@
+
 <eric.abreu@gmail.com>
+
 <jujuhohara@gmail.com>
+
 <mariopettinati@gmail.com>
