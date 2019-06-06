@@ -24,9 +24,9 @@ src         Contains the source code of TerraProcess.
             
 
 Bug reporting:
-------------------------------------
+--------------
 
-Any problems encountered with TerraProcess should be reported development team.
+Any problems encountered with TerraProcess should be reported to development team.
 
 @-TerraProcess Team-@
 <eric.abreu@gmail.com>
