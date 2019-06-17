@@ -24,7 +24,9 @@
 tr::processQt::graphics::Scene::Scene(QObject* object):
   QGraphicsScene(object)
 {
-  
+  QBrush brush(QColor(224, 224, 224));
+  brush.setStyle(Qt::Dense7Pattern);
+  setBackgroundBrush(brush);
 }
 
 tr::processQt::graphics::Scene::~Scene()
