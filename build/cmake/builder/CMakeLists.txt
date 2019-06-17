@@ -29,16 +29,34 @@ source_group("Header Files"  FILES ${TERRAPROCESS_HDR_FILES})
 source_group("Source Files"  FILES ${TERRAPROCESS_SRC_FILES})
 
 include_directories(
+  SYSTEM ${terralib_INCLUDE_DIRS}
+  SYSTEM ${terralib_DIR}
+  SYSTEM ${Boost_INCLUDE_DIR}
   SYSTEM ${TERRAPROCESS_ABSOLUTE_ROOT_DIR}
+  SYSTEM ${CMAKE_BINARY_DIR}
 )
 
 set(TERRAPROCESS_FILES ${TERRAPROCESS_HDR_FILES} ${TERRAPROCESS_SRC_FILES})
 
 add_executable(terraProcessBuilder ${TERRAPROCESS_FILES})
 
-qt5_use_modules(terraProcessBuilder Core Gui Widgets)
+qt5_use_modules(terraProcessQt Core Gui Widgets Svg PrintSupport)
 
-target_link_libraries(terraProcessBuilder terraProcessQt)
+target_link_libraries(terraProcessBuilder 
+									terraProcessQt
+									terralib_mod_color
+								    terralib_mod_common
+								    terralib_mod_core
+								    terralib_mod_dataaccess
+								    terralib_mod_datatype
+								    terralib_mod_geometry
+								    terralib_mod_maptools
+								    terralib_mod_memory
+								    terralib_mod_qt_widgets
+								    terralib_mod_srs
+								    terralib_mod_symbology
+								    terralib_mod_filter
+									${Boost_LIBRARIES})
 
 if(WIN32 AND MSVC)
   set_target_properties(terraProcessBuilder PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:CONSOLE")

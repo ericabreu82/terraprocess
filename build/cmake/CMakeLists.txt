@@ -57,6 +57,9 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX OR (CMAKE_CXX_COMPILER MA
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 endif ()
 
+# boost
+add_definitions(-DBOOST_ALL_NO_LIB -DBOOST_FILESYSTEM_VERSION=3 -DBOOST_UBLAS_TYPE_CHECK=0 -DBOOST_TEST_DYN_LINK)
+
 # cmake policy definitions
 #cmake_policy(SET CMP0020 NEW) #Automatically link Qt executables to qtmain target on Windows.
 #cmake_policy(SET CMP0007 NEW) #list command no longer ignores empty elements.
@@ -92,7 +95,13 @@ endif()
 #
 find_package(terralib ${TERRAAMAZON_TERRALIB_VERSION_MAJOR}.${TERRAAMAZON_TERRALIB_VERSION_MINOR}.${TERRAAMAZON_TERRALIB_VERSION_PATCH})
 
-find_package(Qt5 5.12 REQUIRED COMPONENTS Core Gui Widgets)
+find_package(Boost 1.53.0 REQUIRED system date_time chrono timer filesystem thread unit_test_framework)
+
+if(NOT Boost_FOUND)
+  message(FATAL_ERROR "TerraProcess: could not find required Boost libraries!")
+endif()
+
+find_package(Qt5 5.12 REQUIRED COMPONENTS Core Gui Widgets Svg PrintSupport)
 
 #
 # call cmakefile for each module

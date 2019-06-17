@@ -26,6 +26,11 @@
 */
 
 #include "src/process_qt/builder/BuilderMainWindow.h"
+#include "src/process_qt/propertyBrowser/tree/ContextPropertyEditor.h";
+#include "src/process_qt/propertyBrowser/tree/PropertyDelegate.h";
+#include "src/process_qt/propertyBrowser/proxy/DefaultProxy.h";
+#include "src/process_qt/graphics/core/View.h";
+#include "src/process_qt/graphics/core/Scene.h";
 
 #include "ui_BuilderMainWindowForm.h"
 
@@ -34,9 +39,12 @@
 
 // Qt Includes
 #include <QGraphicsView>
+#include <QVBoxLayout>
 
 tr::processQt::builder::BuilderMainWindow::BuilderMainWindow(QWidget* parent) :
   QMainWindow(parent),
+  m_view(nullptr),
+  m_tree(nullptr),
   m_ui(new Ui::BuilderMainWindowForm)
 {
   m_ui->setupUi(this);
@@ -46,14 +54,49 @@ tr::processQt::builder::BuilderMainWindow::BuilderMainWindow(QWidget* parent) :
   this->addDockWidget(Qt::LeftDockWidgetArea, dockWidget);
 
   dockWidget->setFloating(false);
-  dockWidget->show();
 
   //central widget
-  QGraphicsView* graphicsView = new QGraphicsView(this);
-  this->setCentralWidget(graphicsView);
+  tr::processQt::graphics::Scene* graphicsScene = new tr::processQt::graphics::Scene();
+  m_view = new tr::processQt::graphics::View(graphicsScene, this);
+  this->setCentralWidget(m_view);
+
+  initPropertyBrowser();
+
+  dockWidget->show();
 }
 
 tr::processQt::builder::BuilderMainWindow::~BuilderMainWindow()
+{
+
+}
+
+void tr::processQt::builder::BuilderMainWindow::initPropertyBrowser()
+{
+  tr::processQt::model::ModelBoxDockWidget* dockWidgetPropertyBrowser = new tr::processQt::model::ModelBoxDockWidget(this);
+
+  dockWidgetPropertyBrowser->setWindowTitle(tr("Property Browser"));
+
+  this->addDockWidget(Qt::RightDockWidgetArea, dockWidgetPropertyBrowser);
+
+  dockWidgetPropertyBrowser->setFloating(false);
+
+  createPropertyTree(dockWidgetPropertyBrowser);
+}
+
+void tr::processQt::builder::BuilderMainWindow::createPropertyTree(tr::processQt::model::ModelBoxDockWidget* dockWidget)
+{
+  tr::processQt::propertyBrowser::DefaultProxy* proxy = new tr::processQt::propertyBrowser::DefaultProxy();
+
+  tr::processQt::propertyBrowser::ContextPropertyEditor* context = new tr::processQt::propertyBrowser::ContextPropertyEditor(proxy, m_view->getScene());
+  tr::processQt::propertyBrowser::PropertyDelegate* propDelegate = new tr::processQt::propertyBrowser::PropertyDelegate(context);
+  m_tree.reset(new tr::processQt::propertyBrowser::PropertyTree(propDelegate, dockWidget)); // create property tree
+
+  dockWidget->setWidget(m_tree.get());
+
+  connect(m_tree.get(), SIGNAL(propertiesChanged(const tr::processQt::propertyBrowser::Property&)), this, SLOT(onPropertiesChanged(const tr::processQt::propertyBrowser::Property&)));
+}
+
+void tr::processQt::builder::BuilderMainWindow::onPropertiesChanged(const tr::processQt::propertyBrowser::Property& property)
 {
 
 }

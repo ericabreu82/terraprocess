@@ -29,9 +29,12 @@
 #define __TERRAPROCESS_PROCESSQT_BUILDER_BUILDERMAINDWINDOW__
 
 #include "src/process_qt/Config.h"
+#include "src/process_qt/propertyBrowser/tree/PropertyTree.h"
 
 // Qt Includes
 #include <QMainWindow>
+
+#include <memory>
 
 namespace Ui
 {
@@ -42,6 +45,14 @@ namespace tr
 {
   namespace processQt
   {
+    namespace model
+    {
+      class ModelBoxDockWidget;
+    }
+    namespace graphics
+    {
+      class View;
+    }
     namespace builder
     {
       /*!
@@ -61,8 +72,20 @@ namespace tr
           /*! \brief Default destructor. */
           ~BuilderMainWindow();
 
+        protected slots:
+
+          void onPropertiesChanged(const tr::processQt::propertyBrowser::Property& property);
+
+        protected:
+
+          void initPropertyBrowser();
+
+          void createPropertyTree(tr::processQt::model::ModelBoxDockWidget* dockWidget);
+
         private:
 
+          tr::processQt::graphics::View* m_view;
+          std::unique_ptr<tr::processQt::propertyBrowser::PropertyTree> m_tree;
           Ui::BuilderMainWindowForm* m_ui;
       };
     }
