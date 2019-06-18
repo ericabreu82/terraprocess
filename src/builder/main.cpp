@@ -26,6 +26,7 @@
 */
 
 // TerraProcess Includes
+#include "src/process/core/ScopedTerraLib.h"
 #include "src/process_qt/builder/BuilderMainWindow.h"
 
 // Qt Includes
@@ -42,6 +43,9 @@ int main(int argc, char** argv)
 
   try
   {
+    //initialize TerraLib
+    tr::process::core::ScopedTerraLib scopedTerraLib(true);
+
     tr::processQt::builder::BuilderMainWindow builder;
 
     builder.showMaximized();

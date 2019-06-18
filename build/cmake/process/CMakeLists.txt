@@ -53,6 +53,9 @@ source_group("Source Files\\Serialization"  FILES ${TERRAPROCESS_PROCESS_SERIALI
 
 include_directories(
   SYSTEM ${TERRAPROCESS_ABSOLUTE_ROOT_DIR}
+  SYSTEM ${terralib_INCLUDE_DIRS}
+  SYSTEM ${terralib_DIR}
+  SYSTEM ${Boost_INCLUDE_DIR}
   SYSTEM ${CMAKE_BINARY_DIR}
 )
 
@@ -65,4 +68,6 @@ set(TERRAPROCESS_FILES   ${TERRAPROCESS_PROCESS_HDR_FILES} ${TERRAPROCESS_PROCES
 						 
 add_library(terraProcess SHARED ${TERRAPROCESS_FILES})
 
-target_link_libraries(terraProcess ${TERRALIB_LIBRARIES})
+target_link_libraries(terraProcess terralib_mod_common
+								    terralib_mod_core
+									${Boost_LIBRARIES})

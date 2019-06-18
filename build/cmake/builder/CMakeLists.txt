@@ -43,6 +43,7 @@ add_executable(terraProcessBuilder ${TERRAPROCESS_FILES})
 qt5_use_modules(terraProcessQt Core Gui Widgets Svg PrintSupport)
 
 target_link_libraries(terraProcessBuilder 
+									terraProcess
 									terraProcessQt
 									terralib_mod_color
 								    terralib_mod_common
